@@ -6,6 +6,10 @@ const ground = new Image();
 ground.src = "sprites/ground.png";
 const attackSprite = new Image();
 attackSprite.src = "sprites/sparkEffect.png";
+const sealImage = new Image();
+
+
+
 const waterfall1 = new Image();
 const waterfall2 = new Image();
 const waterfall3 = new Image();

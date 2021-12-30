@@ -47,6 +47,14 @@ function drawSprite(img, sX,sY,sW,sH,dX,dY,dW,dH){
 window.addEventListener("keydown",function(e){
     keys[e.code.toString()[3]]=true;
     if(!isNaN(parseInt(e.code.toString()[6]))){
+        
+        if(player.orientation=="right")playerSprite.src = "sprites/stanceFire.png"
+            else playerSprite.src = "sprites/stanceFire-left.png";
+            maxFramesX=3;
+            maxFramesY=1;
+            player.height=56/maxFramesY;
+            player.width=136/maxFramesX;
+
         jutsuKeys.push(parseInt(e.code.toString()[6]));
         console.log(e.code.toString()[6]);  
         console.log(jutsuKeys);    
@@ -116,7 +124,42 @@ function actionSprite(){
 }
 
 function jutsuSprite(){
+
+    switch( jutsuKeys[ jutsuKeys.length - 1 ] ){
+        case 1:
+            sealImage.src="images/seal1.png";
+            break;
+        case 2:
+            sealImage.src="images/seal2.png";
+            break;
+        case 3:
+            sealImage.src="images/seal3.png";
+            break;
+        case 4:
+            sealImage.src="images/seal4.png";
+            break;
+        case 5:
+            sealImage.src="images/seal5.png";
+            break;
+        case 6:
+            sealImage.src="images/seal6.png";
+            break;
+        case 7:
+            sealImage.src="images/seal7.png";
+            break;
+        case 8:
+            sealImage.src="images/seal8.png";
+            break;
+        case 9:
+            sealImage.src="images/seal9.png";
+            break;
+        default:
+            sealImage.src="";
+            break
+    }
+
     if(jutsuKeys[0]==1 &&jutsuKeys[1]==2 && jutsuKeys[2]==3){
+
         player.prevState=player.state;
         player.state="sparkAttack";
         player.attackTime=20;
@@ -182,7 +225,8 @@ function animate(){
         ctx.drawImage(waterfall[player.frameBackground],0,0,canvas.width,canvas.height);
         //ctx.drawImage(waterfall[player.frameBackground],0,0,341,123, 695,1410,canvas.width*0.420,canvas.height*0.4 );
         ctx.drawImage(ground,0,ground_y,canvas.width,canvas.height*0.2);
-
+        ctx.drawImage(sealImage, 0,0,120,120,canvas.width*0.5,canvas.height*0.1,canvas.height*0.2,canvas.height*0.2 );
+        
         switch(player.state){
             case "sparkAttack":
                 drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - player.width*6,player.y - player.height*6,player.width*17,player.height*17);
