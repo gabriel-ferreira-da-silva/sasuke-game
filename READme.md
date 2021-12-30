@@ -5,8 +5,8 @@ com controle de movimentação,
 poderes e combate
 
 controle: A,W,S,D\
-soco: k\
-poderes: [1,2,3] , [4,5,6]
+ataques: k,j,i\
+poderes: [1,2,3] , [4,5,6] , [1,5,6]
 
 ## poder 1
 
@@ -15,3 +15,7 @@ poderes: [1,2,3] , [4,5,6]
 ## poder 2
 
 ![poder 2](https://github.com/gabriel-ferreira-da-silva/sasuke-game/blob/master/images/s1.png)
+
+## poder 2
+
+![poder 3](https://github.com/gabriel-ferreira-da-silva/sasuke-game/blob/master/images/s4.png)
