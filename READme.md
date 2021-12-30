@@ -11,8 +11,8 @@ poderes: [1,2,3] , [4,5,6].
 
 ## poder 1
 
-![poder 1](https://github.com/gabriel-ferreira-da-silva/sasuke-game/blob/master/images/s1.png)
+![poder 1](https://github.com/gabriel-ferreira-da-silva/sasuke-game/blob/master/images/s2.png)
 
 ## poder 2
 
-![poder 2](/home/gabriel/Desktop/PROGRAMACAO/PROJETO_NARUTO/s2.png)
+![poder 2](https://github.com/gabriel-ferreira-da-silva/sasuke-game/blob/master/images/s1.png)
