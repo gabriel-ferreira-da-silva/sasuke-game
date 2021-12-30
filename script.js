@@ -18,8 +18,10 @@ const player ={
     frameY:0,
     state: "stand",
     prevState:"",
+    orientation:"right",
     speed:120,
     attackTime:0,
+    frameBackground:0,
     moving: false
 };
 
@@ -75,11 +77,13 @@ function moveSprite(){
         player.prevState=player.state;
         player.state="running-left";
         player.x -= player.speed;
+        player.orientation="left";
     }
     if(keys['D']){
         player,prevState=player.state;
         player.state="running";
         player.x += player.speed;
+        player.orientation="right";
     } 
 /*
     if(player.state=="jumping" && player.y < player.height*10){
@@ -99,6 +103,16 @@ function actionSprite(){
         player.prevState=player.state;
         player.state="punching";
     }
+
+    if(keys['J']){
+        player.prevState=player.state;
+        player.state="kicking";
+    }
+
+    if(keys['I']){
+        player.prevState=player.state;
+        player.state="striking";
+    }
 }
 
 function jutsuSprite(){
@@ -117,7 +131,15 @@ function jutsuSprite(){
         attack.y = player.y - player.height*5;
         attack.x = player.x - player.width*5;
         console.log("light ball attack !!!");
-        
+    }
+    if(jutsuKeys[0]==1 &&jutsuKeys[1]==5 && jutsuKeys[2]==6){
+        player.prevState=player.state;
+        player.state="fireBallAttack";
+        attack.state="fireBallAttack";
+        player.attackTime=20;
+        attack.y = player.y - player.height*5;
+        attack.x = player.x - player.width*5;
+        console.log("fire ball attack !!!");
     }
 
 
@@ -132,8 +154,11 @@ function handlePlayerFrame(){
 
     if(attack.frameX < 2  ) attack.frameX++
     else attack.frameX=0;
-}
 
+    if(player.frameBackground < 2 ) player.frameBackground++
+    else player.frameBackground=0;
+
+}
 
 let fps, fpsInterval, startTime , now, then, elapsed;
 
@@ -153,22 +178,39 @@ function animate(){
     if(elapsed> fpsInterval){
         then=now-(elapsed%fpsInterval);
         //ctx.clearRect(0,0,canvas.width, canvas.height);
+        //void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
         ctx.drawImage(background,0,0,canvas.width,canvas.height);
+        ctx.drawImage(waterfall[player.frameBackground],0,0,341,123, 695,1410,canvas.width*0.420,canvas.height*0.4 );
         ctx.drawImage(ground,0,ground_y,canvas.width,canvas.height*0.2);
 
         switch(player.state){
             case "sparkAttack":
-                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - player.width*5,player.y - player.height*5,player.width*17,player.height*17);
+                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - player.width*6,player.y - player.height*6,player.width*17,player.height*17);
                 drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
+                if(count%2)drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - player.width*5,player.y - player.height*5,player.width*17,player.height*17);
                 console.log(player.attackTime);
                 player.attackTime--;
                 if( player.attackTime <=0 ) player.state="stand";
                 break;
 
             case "lightBallAttack":
-                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,attack.x,attack.y,player.width*17,player.height*17);
+                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,attack.x,attack.y,player.width*15,player.height*20);
                 drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
-                attack.x+=attack.speed;
+                    
+                if(player.orientation=="right") attack.x+=attack.speed 
+                else attack.x-=attack.speed ;
+    
+                console.log(player.attackTime);
+                player.attackTime--;
+                if( player.attackTime <=0 ) player.state="stand";
+               break;
+
+             case "fireBallAttack":
+                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,attack.x,attack.y,player.width*15,player.height*20);
+                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
+                
+                if(player.orientation=="right") attack.x+=attack.speed 
+                else attack.x-=attack.speed ;
 
                 console.log(player.attackTime);
                 player.attackTime--;

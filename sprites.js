@@ -6,6 +6,13 @@ const ground = new Image();
 ground.src = "sprites/ground.png";
 const attackSprite = new Image();
 attackSprite.src = "sprites/sparkEffect.png";
+const waterfall1 = new Image();
+const waterfall2 = new Image();
+const waterfall3 = new Image();
+waterfall1.src = "sprites/waterfall1.png";
+waterfall2.src = "sprites/waterfall2.png";
+waterfall3.src = "sprites/waterfall3.png";
+const waterfall = new Array(waterfall1,waterfall2, waterfall3);
 
 function selectState(){
     switch( player.state){
@@ -40,11 +47,30 @@ function selectState(){
             player.width=408/maxFramesX;
         break;
         case "punching":
-            playerSprite.src = "sprites/punch.png";
+            if(player.orientation=="right")playerSprite.src = "sprites/punch.png"
+            else playerSprite.src = "sprites/punch-left.png";
             maxFramesX=3;
             maxFramesY=1;
             player.height=56/maxFramesY;
             player.width=233/maxFramesX;
+        break;
+
+        case "kicking":
+            if(player.orientation=="right")playerSprite.src = "sprites/kicking.png"
+            else playerSprite.src = "sprites/kicking-left.png";
+            maxFramesX=4;
+            maxFramesY=1;
+            player.height=56/maxFramesY;
+            player.width=240/maxFramesX;
+        break;
+
+        case "striking":
+            if(player.orientation=="right")playerSprite.src = "sprites/strike.png"
+            else playerSprite.src = "sprites/strike-left.png";
+            maxFramesX=3;
+            maxFramesY=1;
+            player.height=56/maxFramesY;
+            player.width=330/maxFramesX;
         break;
 
         case "sparkAttack":
@@ -59,7 +85,8 @@ function selectState(){
         break;
 
         case "lightBallAttack": 
-            playerSprite.src = "sprites/stance.png";
+            if(player.orientation=="right")playerSprite.src = "sprites/stance.png"
+            else playerSprite.src = "sprites/stance-left.png";
             maxFramesX=2;
             maxFramesY=1;
             player.height=56/maxFramesY;
@@ -70,8 +97,23 @@ function selectState(){
             
         break;
 
+         case "fireBallAttack": 
+            if(player.orientation=="right")playerSprite.src = "sprites/stanceFire.png"
+            else playerSprite.src = "sprites/stanceFire-left.png";
+            maxFramesX=3;
+            maxFramesY=1;
+            player.height=56/maxFramesY;
+            player.width=136/maxFramesX;
+            if(player.orientation=="right")attackSprite.src = "sprites/fireball.png"
+            else attackSprite.src = "sprites/fireball-left.png";
+            attack.height=154/1;
+            attack.width=920/6;
+            
+        break;
+
         case "stand":
-            playerSprite.src = "sprites/stand.png";
+            if(player.orientation=="right")playerSprite.src = "sprites/stand.png"
+            else playerSprite.src = "sprites/stand-left.png";
             maxFramesX=4;
             maxFramesY=1;
             player.height=56/maxFramesY;
