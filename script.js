@@ -179,8 +179,8 @@ function animate(){
         then=now-(elapsed%fpsInterval);
         //ctx.clearRect(0,0,canvas.width, canvas.height);
         //void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-        ctx.drawImage(background,0,0,canvas.width,canvas.height);
-        ctx.drawImage(waterfall[player.frameBackground],0,0,341,123, 695,1410,canvas.width*0.420,canvas.height*0.4 );
+        ctx.drawImage(waterfall[player.frameBackground],0,0,canvas.width,canvas.height);
+        //ctx.drawImage(waterfall[player.frameBackground],0,0,341,123, 695,1410,canvas.width*0.420,canvas.height*0.4 );
         ctx.drawImage(ground,0,ground_y,canvas.width,canvas.height*0.2);
 
         switch(player.state){
