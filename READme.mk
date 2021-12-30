@@ -2,11 +2,11 @@
 
 um pequeno minigame de sprites
 com controle de movimentação,
-poderes e combate<br>
+poderes e combate<br/>
 
-controle: A,W,S,D<br>
-soco: k<br>
-poderes: [1,2,3] , [4,5,6]<br>
+controle: A,W,S,D<br/>
+soco: k<br/>
+poderes: [1,2,3] , [4,5,6]<br/>
 
 
 ## poder 1
