@@ -4,10 +4,8 @@ const background = new Image();
 background.src = "sprites/background.webp";
 const ground = new Image();
 ground.src = "sprites/ground.png";
-
-var audio = new Audio();
-audio.src = "sasuke.mp3";
-audio.play();
+const attackSprite = new Image();
+attackSprite.src = "sprites/sparkEffect.png";
 
 function selectState(){
     switch( player.state){
@@ -49,6 +47,29 @@ function selectState(){
             player.width=233/maxFramesX;
         break;
 
+        case "sparkAttack":
+            playerSprite.src = "sprites/spark.png";
+            attackSprite.src="sprites/sparkEffect.png"
+            maxFramesX=3;
+            maxFramesY=1;
+            player.height=56/maxFramesY;
+            player.width=189/maxFramesX;
+            attack.height=142/1;
+            attack.width=300/2;
+        break;
+
+        case "lightBallAttack": 
+            playerSprite.src = "sprites/stance.png";
+            maxFramesX=2;
+            maxFramesY=1;
+            player.height=56/maxFramesY;
+            player.width=110/maxFramesX;
+            attackSprite.src = "sprites/lightBall.png";
+            attack.height=142/1;
+            attack.width=230/3;
+            
+        break;
+
         case "stand":
             playerSprite.src = "sprites/stand.png";
             maxFramesX=4;
@@ -56,5 +77,13 @@ function selectState(){
             player.height=56/maxFramesY;
             player.width=152/maxFramesX;
         break;
-}
+    }
+
+    switch( attack.state){
+        
+        case "lightBallAttack":
+            
+        break;
+
+    }
 }
