@@ -164,6 +164,8 @@ function jutsuSprite(){
         player.state="sparkAttack";
         player.attackTime=20;
         console.log("sprite attack !!!");
+        effect.play();
+        poder.play();
     }
 
     if(jutsuKeys[0]==4 &&jutsuKeys[1]==5 && jutsuKeys[2]==6){
@@ -174,6 +176,8 @@ function jutsuSprite(){
         attack.y = player.y - player.height*5;
         attack.x = player.x - player.width*5;
         console.log("light ball attack !!!");
+        effect.play();
+        poder2.play();
     }
     if(jutsuKeys[0]==1 &&jutsuKeys[1]==5 && jutsuKeys[2]==6){
         player.prevState=player.state;
@@ -183,6 +187,11 @@ function jutsuSprite(){
         attack.y = player.y - player.height*5;
         attack.x = player.x - player.width*5;
         console.log("fire ball attack !!!");
+        effect.play();
+        fireball2.play();
+        fireball.play();
+        
+        
     }
 
 
@@ -190,7 +199,6 @@ function jutsuSprite(){
 
 function handlePlayerFrame(){
     selectState();
-    
     if(player.frameX < maxFramesX-1  ) player.frameX++
     else player.frameX=0;
 
@@ -203,18 +211,24 @@ function handlePlayerFrame(){
 
 }
 
+function play(){
+    track.play();
+}
+
 let fps, fpsInterval, startTime , now, then, elapsed;
 
 function startAnimating(fps){
+    
     fpsInterval=1000/fps;
     then= Date.now();
     startTime=then;
     animate();
+
 }
 let count=0;
 
 function animate(){
-    
+    //track.play();
     requestAnimationFrame(animate);
     now =Date.now();
     elapsed=now-then;
@@ -225,7 +239,7 @@ function animate(){
         ctx.drawImage(waterfall[player.frameBackground],0,0,canvas.width,canvas.height);
         //ctx.drawImage(waterfall[player.frameBackground],0,0,341,123, 695,1410,canvas.width*0.420,canvas.height*0.4 );
         ctx.drawImage(ground,0,ground_y,canvas.width,canvas.height*0.2);
-        ctx.drawImage(sealImage, 0,0,120,120,canvas.width*0.5,canvas.height*0.1,canvas.height*0.2,canvas.height*0.2 );
+        ctx.drawImage(sealImage, 0,0,120,120,canvas.width*0.4,canvas.height*0.1,canvas.height*0.2,canvas.height*0.2 );
         
         switch(player.state){
             case "sparkAttack":
@@ -284,8 +298,11 @@ function animate(){
     }
 }        
 
+function start(){
+    startAnimating(14);    
+}
 
-startAnimating(14);
+start();
 
 /*
 function animate(){

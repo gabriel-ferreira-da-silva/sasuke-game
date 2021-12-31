@@ -7,6 +7,14 @@ ground.src = "sprites/ground.png";
 const attackSprite = new Image();
 attackSprite.src = "sprites/sparkEffect.png";
 const sealImage = new Image();
+const effect = new Audio("music/jutsu.wav");
+const poder = new Audio("music/spark.mp3");
+const poder2 = new Audio("music/poder2.mp3");
+const fireball = new Audio("music/fireball.mp3");
+const fireball2 = new Audio("music/fireball2.mp3");
+const track = new Audio("music/sasuke.mp3");
+
+
 
 
 
@@ -78,6 +86,8 @@ function selectState(){
         break;
 
         case "sparkAttack":
+
+            
             playerSprite.src = "sprites/spark.png";
             attackSprite.src="sprites/sparkEffect.png"
             maxFramesX=3;
@@ -102,6 +112,7 @@ function selectState(){
         break;
 
          case "fireBallAttack": 
+         
             if(player.orientation=="right")playerSprite.src = "sprites/stanceFire.png"
             else playerSprite.src = "sprites/stanceFire-left.png";
             maxFramesX=3;
@@ -116,6 +127,10 @@ function selectState(){
         break;
 
         case "stand":
+            poder.pause();
+            poder2.pause();
+            fireball.pause();
+            fireball2.pause();
             if(player.orientation=="right")playerSprite.src = "sprites/stand.png"
             else playerSprite.src = "sprites/stand-left.png";
             maxFramesX=4;
