@@ -1,4 +1,4 @@
-# minigame do sasuke
+123dddddddddddddd# minigame do sasuke
 
 um pequeno minigame de sprites
 com controle de movimentação,
@@ -6,6 +6,7 @@ poderes e combate
 
 controle: A,W,S,D\
 ataques: k,j,i\
+pular: espaço\
 poderes: [1,2,3] , [4,5,6] , [1,5,6]
 
 ## poder 1

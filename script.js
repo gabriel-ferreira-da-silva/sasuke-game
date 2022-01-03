@@ -1,7 +1,10 @@
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
-canvas.width =2400;
-canvas.height =2000;
+canvas.width= 2400;
+canvas.height= 2000;
+
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
 
 ground_y=canvas.height*0.9;
 const keys = [];
@@ -12,17 +15,22 @@ const AttackFrames=0;
 const player ={
     x:50,
     y:ground_y*0.87,
+    correction:0,
     height:56,
     width:38,
     frameX:0,
     frameY:0,
+    frameLimit:0,
+    frameIncrement:0,
+    frameInitial:0,
     state: "stand",
     prevState:"",
     orientation:"right",
     speed:120,
     attackTime:0,
     frameBackground:0,
-    moving: false
+    moving: false,
+    attacking:false,
 };
 
 
@@ -33,6 +41,7 @@ const attack ={
     width:200,
     frameX:0,
     frameY:0,
+    orientation:player.orientation,
     state: "stand",
     prevState:"",
     speed:120,
@@ -50,6 +59,8 @@ window.addEventListener("keydown",function(e){
         
         if(player.orientation=="right")playerSprite.src = "sprites/stanceFire.png"
             else playerSprite.src = "sprites/stanceFire-left.png";
+
+	    effect.play();
             maxFramesX=3;
             maxFramesY=1;
             player.height=56/maxFramesY;
@@ -59,7 +70,7 @@ window.addEventListener("keydown",function(e){
         console.log(e.code.toString()[6]);  
         console.log(jutsuKeys);    
     }
-    console.log(e.code.toString()[3]);
+    console.log(e.code.toString());
 });
 
 window.addEventListener("keyup",function(e){
@@ -71,29 +82,43 @@ window.addEventListener("keyup",function(e){
 
 function moveSprite(){
     
-    if(keys[0]==null){
-        if(0/* player.y < ground_y-50*/ ){
-            player.state="falling";
-            player.y+=player.speed;
-        }else{
+    if( keys['c']==null && player.y < ground_y*0.87 ){
+        player.state="falling";
+    }
+    
+    if(player.state!="falling"){
+        player.state="stand";
+        if(keys['c']){
+            player.state="jumping";
+            player.y-=player.speed;
+        }
+    }else{
+        if(player.y>(ground_y*0.85)){
             player.y=ground_y*0.87;
             player.state="stand";
-        }
+        }else player.y+=player.speed;
     }
 
     if(keys['A']){
         player.prevState=player.state;
-        player.state="running-left";
+        if(player.state!="falling" && player.state!="jumping" && !player.attacking)player.state="running-left";
         player.x -= player.speed;
         player.orientation="left";
     }
     if(keys['D']){
         player,prevState=player.state;
-        player.state="running";
+        if(player.state!="falling" && player.state!="jumping" && !player.attacking)player.state="running";
         player.x += player.speed;
         player.orientation="right";
     } 
-/*
+    
+    if(player.y <(ground_y*0.6) ){
+        player.state="falling";
+    }
+
+    
+
+    /*
     if(player.state=="jumping" && player.y < player.height*10){
         player.state="falling";
     }
@@ -172,7 +197,7 @@ function jutsuSprite(){
         player.prevState=player.state;
         player.state="lightBallAttack";
         attack.state="lightBallAttack";
-        player.attackTime=20;
+        player.attackTime=40;
         attack.y = player.y - player.height*5;
         attack.x = player.x - player.width*5;
         console.log("light ball attack !!!");
@@ -188,6 +213,8 @@ function jutsuSprite(){
         attack.x = player.x - player.width*5;
         console.log("fire ball attack !!!");
         effect.play();
+	fireball2.currentTime=0;	    
+	fireball.currentTime=0;	    
         fireball2.play();
         fireball.play();
         
@@ -199,9 +226,15 @@ function jutsuSprite(){
 
 function handlePlayerFrame(){
     selectState();
-    if(player.frameX < maxFramesX-1  ) player.frameX++
+    
+    if(player.frameX < maxFramesX-1  ) player.frameX+=1;
     else player.frameX=0;
-
+    
+    
+    /*
+    if(player.frameX < player.framesLimit  ) player.frameX+=player.frameIncrement;
+    else player.frameX=player.frameInitial;
+    */
 
     if(attack.frameX < 2  ) attack.frameX++
     else attack.frameX=0;
@@ -243,9 +276,9 @@ function animate(){
         
         switch(player.state){
             case "sparkAttack":
-                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - player.width*6,player.y - player.height*6,player.width*17,player.height*17);
-                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
-                if(count%2)drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - player.width*5,player.y - player.height*5,player.width*17,player.height*17);
+                drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - (player.width*6 +player.width*2.5),player.y - player.height*6,player.width*17,player.height*17);
+                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x-player.width*2.5,player.y,player.width*5,player.height*5);
+                if(Math.random()>0.7)drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,player.x - (player.width*6 +player.width*2.5),player.y - player.height*5,player.width*17,player.height*17);
                 console.log(player.attackTime);
                 player.attackTime--;
                 if( player.attackTime <=0 ) player.state="stand";
@@ -253,7 +286,7 @@ function animate(){
 
             case "lightBallAttack":
                 drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,attack.x,attack.y,player.width*15,player.height*20);
-                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
+                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x-player.width*2.5,player.y,player.width*5,player.height*5);
                     
                 if(player.orientation=="right") attack.x+=attack.speed 
                 else attack.x-=attack.speed ;
@@ -265,9 +298,9 @@ function animate(){
 
              case "fireBallAttack":
                 drawSprite(attackSprite,attack.width*attack.frameX, attack.height*attack.frameY, attack.width,attack.height,attack.x,attack.y,player.width*15,player.height*20);
-                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
+                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x-player.width*2.5,player.y,player.width*5,player.height*5);
                 
-                if(player.orientation=="right") attack.x+=attack.speed 
+                if(attack.orientation=="right") attack.x+=attack.speed 
                 else attack.x-=attack.speed ;
 
                 console.log(player.attackTime);
@@ -276,7 +309,7 @@ function animate(){
                 break;
 
             default:
-                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x,player.y,player.width*5,player.height*5);
+                drawSprite(playerSprite,player.width*player.frameX, player.height*player.frameY, player.width,player.height,player.x-player.width*2.5,player.y,player.width*5,player.height*5);
                 moveSprite();
                 jutsuSprite();
                 actionSprite();

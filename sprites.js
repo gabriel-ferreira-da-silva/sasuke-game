@@ -46,17 +46,19 @@ function selectState(){
         break;
         case "jumping":
             playerSprite.src = "sprites/jumping.png";
-            maxFramesX=8;
+            if(player.orientation=="left")playerSprite.src = "sprites/jumping-left.png";
+            maxFramesX=2;
             maxFramesY=1;
-            player.height=72/maxFramesY;
-            player.width=408/maxFramesX;
+            player.height=56/maxFramesY;
+            player.width=100/maxFramesX;
         break;
         case "falling":
             playerSprite.src = "sprites/jumping.png";
-            maxFramesX=8;
+            if(player.orientation=="left")playerSprite.src = "sprites/jumping-left.png";
+            maxFramesX=2;
             maxFramesY=1;
-            player.height=72/maxFramesY;
-            player.width=408/maxFramesX;
+            player.height=56/maxFramesY;
+            player.width=100/maxFramesX;
         break;
         case "punching":
             if(player.orientation=="right")playerSprite.src = "sprites/punch.png"
@@ -68,21 +70,40 @@ function selectState(){
         break;
 
         case "kicking":
-            if(player.orientation=="right")playerSprite.src = "sprites/kicking.png"
-            else playerSprite.src = "sprites/kicking-left.png";
             maxFramesX=4;
             maxFramesY=1;
             player.height=56/maxFramesY;
             player.width=240/maxFramesX;
+            if(player.orientation=="right"){playerSprite.src = "sprites/kicking.png";}
+            else{
+                playerSprite.src = "sprites/kicking-left.png";
+                
+            }
+            
         break;
 
         case "striking":
-            if(player.orientation=="right")playerSprite.src = "sprites/strike.png"
-            else playerSprite.src = "sprites/strike-left.png";
             maxFramesX=3;
             maxFramesY=1;
+            //frameLimit=maxFramesX-1;
+            if(player.orientation=="right"){
+                playerSprite.src = "sprites/strike.png";
+                /*player.frameLimit=maxFramesX-1;
+                player.frameInitial=0;
+                player.frameIncrement=1;*/
+            }
+            else{ 
+                playerSprite.src = "sprites/strike-left.png";
+                console.log("wait for correction!!")
+                //player.x-=(110);
+                //player.correction=(110);
+                /*player.frameLimit=0;
+                player.frameInitial=maxFramesX-1;
+                player.frameIncrement=-1;
+                /*player.x-=player.width;*/}
             player.height=56/maxFramesY;
             player.width=330/maxFramesX;
+            
         break;
 
         case "sparkAttack":
@@ -92,6 +113,7 @@ function selectState(){
             attackSprite.src="sprites/sparkEffect.png"
             maxFramesX=3;
             maxFramesY=1;
+            
             player.height=56/maxFramesY;
             player.width=189/maxFramesX;
             attack.height=142/1;
@@ -112,7 +134,7 @@ function selectState(){
         break;
 
          case "fireBallAttack": 
-         
+            player.attacking=true;
             if(player.orientation=="right")playerSprite.src = "sprites/stanceFire.png"
             else playerSprite.src = "sprites/stanceFire-left.png";
             maxFramesX=3;
@@ -121,22 +143,31 @@ function selectState(){
             player.width=136/maxFramesX;
             if(player.orientation=="right")attackSprite.src = "sprites/fireball.png"
             else attackSprite.src = "sprites/fireball-left.png";
+            attack.orientation=player.orientation;
             attack.height=154/1;
             attack.width=920/6;
             
         break;
 
         case "stand":
+            player.attacking=false;
             poder.pause();
+	        poder.currentTime=0;
             poder2.pause();
+	        poder2.currentTime=0;	    
             fireball.pause();
+	        fireball.currentTime=0;	    
             fireball2.pause();
-            if(player.orientation=="right")playerSprite.src = "sprites/stand.png"
-            else playerSprite.src = "sprites/stand-left.png";
             maxFramesX=4;
             maxFramesY=1;
             player.height=56/maxFramesY;
             player.width=152/maxFramesX;
+            //player.x+=player.correction;
+            //player.correction=0;
+            
+            if(player.orientation=="right")playerSprite.src = "sprites/stand.png"
+            else playerSprite.src = "sprites/stand-left.png";
+
         break;
     }
 
