@@ -1,4 +1,4 @@
-123dddddddddddddd# minigame do sasuke
+# minigame do sasuke
 
 um pequeno minigame de sprites
 com controle de movimentação,
